@@ -1,0 +1,10 @@
+services:
+  synthiptv:
+    image: ${SYNTHIPTV_IMAGE:-ghcr.io/dmesgnoise/synthiptv:1.0}
+    container_name: synthiptv
+    restart: unless-stopped
+    ports:
+      - "${SYNTHIPTV_PORT:-8892}:8892"
+    volumes:
+      - ${SYNTHIPTV_CONFIG:-./config}:/opt/synthiptv/config
+      - /run/synth-protected:/run/synth-protected

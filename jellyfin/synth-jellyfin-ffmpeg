@@ -1,0 +1,73 @@
+#!/bin/bash
+
+REAL="${SYNTH_JELLYFIN_REAL_FFMPEG:-/usr/lib/jellyfin-ffmpeg/ffmpeg.real}"
+
+original=("$@")
+is_live_tv=0
+
+for arg in "${original[@]}"; do
+    case "$arg" in
+        *"/LiveTv/LiveStreamFiles/"*"/stream.ts"*)
+            is_live_tv=1
+            break
+            ;;
+    esac
+done
+
+if (( ! is_live_tv )); then
+    "$REAL" "${original[@]}"
+    exit $?
+fi
+
+rewritten=()
+
+while (($#)); do
+    case "$1" in
+        -re)
+            shift
+            ;;
+        -readrate_catchup)
+            shift
+            if (($#)); then
+                shift
+            fi
+            ;;
+        -copyts)
+            shift
+            ;;
+        -start_at_zero)
+            shift
+            ;;
+        -fflags)
+            shift
+            if (($#)); then
+                flags="$1"
+                flags="${flags//+igndts/}"
+                flags="${flags//igndts+/}"
+                flags="${flags//igndts/}"
+
+                if [[ "$flags" != *genpts* ]]; then
+                    flags="${flags}+genpts"
+                fi
+
+                rewritten+=("-fflags" "$flags")
+                shift
+            fi
+            ;;
+        -avoid_negative_ts)
+            shift
+            if (($#)); then
+                shift
+            fi
+            rewritten+=("-avoid_negative_ts" "make_zero")
+            ;;
+        *)
+            rewritten+=("$1")
+            shift
+            ;;
+    esac
+done
+
+printf '[SYNTH-JF] Live TV timestamp compatibility active\n' >&2
+
+"$REAL" "${rewritten[@]}"
