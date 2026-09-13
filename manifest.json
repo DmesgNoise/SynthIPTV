@@ -12,7 +12,7 @@
         "changelog": "Initial release. Adds native Jellyfin 12 compatibility for SynthIPTV Live TV playback.",
         "targetAbi": "12.0.0.0",
         "sourceUrl": "https://github.com/DmesgNoise/SynthIPTV/releases/download/jellyfin-plugin-v0.1.0/SynthIPTV.Jellyfin.Compatibility_0.1.0.0.zip",
-        "checksum": "2fd8d1f4ea4eca5c0b3a9b5ed00563dc",
+        "checksum": "fa65e256126c459d6c0fcf3392874cc7",
         "timestamp": "2026-09-13T03:00:00Z"
       }
     ]
