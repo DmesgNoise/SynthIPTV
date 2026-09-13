@@ -19,7 +19,7 @@ Supported protected sources also require the Synth Protected Runtime and a suppo
 
 The recommended installation method is Docker Compose.
 
-The SynthIPTV v1.1 Docker image is:
+The SynthIPTV v1.1.1 Docker image is:
 
 ```text
 ghcr.io/dmesgnoise/synthiptv:latest
@@ -191,7 +191,7 @@ No special FFmpeg configuration is required for Emby.
 
 ## Jellyfin
 
-SynthIPTV 1.1 uses a Jellyfin compatibility plugin for Live TV playback.
+SynthIPTV 1.1.1 uses a Jellyfin compatibility plugin for Live TV playback.
 
 The plugin keeps Jellyfin's normal FFmpeg installation in place. You do not need to replace Jellyfin FFmpeg, install a wrapper, change the FFmpeg path, or make platform-specific FFmpeg changes.
 
@@ -341,7 +341,7 @@ http://SERVER-IP:8892
 
 ## FFmpeg
 
-SynthIPTV v1.1 contains a custom-built FFmpeg 8.1.2 used as part of its media pipeline.
+SynthIPTV v1.1.1 contains a custom-built FFmpeg 8.1.2 used as part of its media pipeline.
 
 Build configuration:
 
