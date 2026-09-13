@@ -1,0 +1,20 @@
+[
+  {
+    "guid": "3e6356c6-9b6c-4fd2-beb5-d7205de89c36",
+    "name": "SynthIPTV Jellyfin Compatibility",
+    "overview": "Makes Jellyfin 12 Live TV playback compatible with SynthIPTV without replacing Jellyfin FFmpeg.",
+    "description": "Applies the required SynthIPTV Live TV timestamp compatibility corrections inside Jellyfin while preserving Jellyfin's stock FFmpeg and stream-copy playback.",
+    "owner": "SynthIPTV",
+    "category": "Live TV",
+    "versions": [
+      {
+        "version": "0.1.0.0",
+        "changelog": "Initial release. Adds native Jellyfin 12 compatibility for SynthIPTV Live TV playback.",
+        "targetAbi": "12.0.0.0",
+        "sourceUrl": "https://github.com/DmesgNoise/SynthIPTV/releases/download/jellyfin-plugin-v0.1.0/SynthIPTV.Jellyfin.Compatibility_0.1.0.0.zip",
+        "checksum": "2fd8d1f4ea4eca5c0b3a9b5ed00563dc",
+        "timestamp": "2026-09-13T03:00:00Z"
+      }
+    ]
+  }
+]
