@@ -19,10 +19,10 @@ Supported protected sources also require the Synth Protected Runtime and a suppo
 
 The recommended installation method is Docker Compose.
 
-The SynthIPTV v1.0 Docker image is:
+The SynthIPTV v1.1 Docker image is:
 
 ```text
-ghcr.io/dmesgnoise/synthiptv:1.0
+ghcr.io/dmesgnoise/synthiptv:latest
 ```
 
 ### Docker Compose
@@ -80,7 +80,7 @@ Example:
 ```text
 SYNTHIPTV_PORT=8892
 SYNTHIPTV_CONFIG=./config
-SYNTHIPTV_IMAGE=ghcr.io/dmesgnoise/synthiptv:1.0
+SYNTHIPTV_IMAGE=ghcr.io/dmesgnoise/synthiptv:latest
 ```
 
 Then start or recreate the container:
@@ -106,7 +106,7 @@ Use this Compose configuration:
 ```yaml
 services:
   synthiptv:
-    image: ghcr.io/dmesgnoise/synthiptv:1.0
+    image: ghcr.io/dmesgnoise/synthiptv:latest
     container_name: synthiptv
     restart: unless-stopped
     ports:
@@ -143,7 +143,7 @@ mkdir -p ~/.config/synthiptv
 Pull the SynthIPTV image:
 
 ```bash
-docker pull ghcr.io/dmesgnoise/synthiptv:1.0
+docker pull ghcr.io/dmesgnoise/synthiptv:latest
 ```
 
 Start the container:
@@ -155,7 +155,7 @@ docker run -d \
   -p 8892:8892 \
   -v "$HOME/.config/synthiptv:/opt/synthiptv/config" \
   -v /run/synth-protected:/run/synth-protected \
-  ghcr.io/dmesgnoise/synthiptv:1.0
+  ghcr.io/dmesgnoise/synthiptv:latest
 ```
 
 Open:
@@ -172,13 +172,13 @@ The `/run/synth-protected` mount is harmless when the optional protected runtime
 
 Open the SynthIPTV web interface.
 
-Use the guided setup to choose your media server and configure the available providers and channels.
+Select your media server, enter its connection information, choose your channels, and save your settings.
 
 SynthIPTV displays the M3U playlist URL and XMLTV guide URL in the web interface. Use those URLs in your media server without modifying them.
 
 ## Emby
 
-SynthIPTV was developed primarily against Emby and works as a normal M3U tuner plus XMLTV guide source.
+SynthIPTV works with Emby as a normal M3U tuner plus XMLTV guide source.
 
 In Emby:
 
@@ -187,28 +187,58 @@ In Emby:
 3. Add the XMLTV guide URL shown by SynthIPTV.
 4. Refresh guide data.
 
-No special FFmpeg configuration is required for the normal Emby path.
+No special FFmpeg configuration is required for Emby.
 
 ## Jellyfin
 
-Jellyfin uses different Live TV FFmpeg input and timestamp behavior than Emby. SynthIPTV includes a Jellyfin compatibility wrapper for this reason.
+SynthIPTV 1.1 uses a Jellyfin compatibility plugin for Live TV playback.
 
-During guided setup, select Jellyfin and provide:
+The plugin keeps Jellyfin's normal FFmpeg installation in place. You do not need to replace Jellyfin FFmpeg, install a wrapper, change the FFmpeg path, or make platform-specific FFmpeg changes.
 
-- The Jellyfin server URL
-- A Jellyfin API key
+The compatibility plugin has been tested with Jellyfin 12.0.0.
 
-SynthIPTV will show the Jellyfin-specific M3U URL and the required wrapper setup instructions.
+### Install the SynthIPTV Jellyfin plugin
 
-The included wrapper is:
+In Jellyfin:
+
+1. Open Dashboard -> Plugins -> Repositories.
+2. Add the SynthIPTV plugin repository:
 
 ```text
-jellyfin/synth-jellyfin-ffmpeg
+https://raw.githubusercontent.com/DmesgNoise/SynthIPTV/main/manifest.json
 ```
 
-Follow the instructions shown in the SynthIPTV web interface for your Jellyfin installation type.
+3. Open the plugin Catalog.
+4. Install `SynthIPTV Jellyfin Compatibility`.
+5. Restart Jellyfin.
 
-Do not point Jellyfin at the normal Emby playlist when Jellyfin support has been configured. Use the Jellyfin M3U URL shown by SynthIPTV.
+### Configure SynthIPTV
+
+Open the SynthIPTV web interface.
+
+1. Select `Jellyfin` as the media server.
+2. Enter the Jellyfin server URL.
+3. Enter a Jellyfin API key.
+4. Select the channels you want.
+5. Save your settings.
+
+SynthIPTV will display:
+
+- A Jellyfin-specific M3U URL
+- An XMLTV guide URL
+
+### Add SynthIPTV to Jellyfin Live TV
+
+In Jellyfin:
+
+1. Open Dashboard -> Live TV.
+2. Add an M3U tuner using the Jellyfin M3U URL shown by SynthIPTV.
+3. Add an XMLTV guide source using the XMLTV URL shown by SynthIPTV.
+4. Refresh guide data.
+
+Use the Jellyfin-specific M3U URL shown by SynthIPTV, not the normal Emby playlist URL.
+
+Once the plugin is installed and Jellyfin has been restarted, no additional FFmpeg configuration is required.
 
 ## Protected Sources
 
@@ -272,7 +302,7 @@ Pull or redeploy the current image and recreate the stack while keeping the same
 Pull the current image:
 
 ```bash
-docker pull ghcr.io/dmesgnoise/synthiptv:1.0
+docker pull ghcr.io/dmesgnoise/synthiptv:latest
 ```
 
 Remove the old container:
@@ -311,7 +341,7 @@ http://SERVER-IP:8892
 
 ## FFmpeg
 
-SynthIPTV v1.0 contains a custom-built FFmpeg 8.1.2 used as part of its media pipeline.
+SynthIPTV v1.1 contains a custom-built FFmpeg 8.1.2 used as part of its media pipeline.
 
 Build configuration:
 

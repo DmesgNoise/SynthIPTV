@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>SynthIPTV.Jellyfin.Compatibility</AssemblyName>
+    <RootNamespace>SynthIPTV.Jellyfin.Compatibility</RootNamespace>
+    <Version>0.1.0</Version>
+    <AssemblyVersion>0.1.0.0</AssemblyVersion>
+    <FileVersion>0.1.0.0</FileVersion>
+  </PropertyGroup>
+
+  <!--
+    Proof build: compile directly against the exact Jellyfin 12.0 source tree
+    already frozen for SynthIPTV qualification. Jellyfin host assemblies are
+    compile-time references only and are not intended to ship with the plugin.
+  -->
+  <ItemGroup>
+    <ProjectReference Include="../jellyfin-12-source/MediaBrowser.Common/MediaBrowser.Common.csproj" Private="false" />
+    <ProjectReference Include="../jellyfin-12-source/MediaBrowser.Controller/MediaBrowser.Controller.csproj" Private="false" />
+    <ProjectReference Include="../jellyfin-12-source/MediaBrowser.Model/MediaBrowser.Model.csproj" Private="false" />
+  </ItemGroup>
+</Project>

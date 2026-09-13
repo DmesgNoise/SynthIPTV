@@ -1,6 +1,6 @@
 services:
   synthiptv:
-    image: ${SYNTHIPTV_IMAGE:-ghcr.io/dmesgnoise/synthiptv:1.0}
+    image: ${SYNTHIPTV_IMAGE:-ghcr.io/dmesgnoise/synthiptv:latest}
     container_name: synthiptv
     restart: unless-stopped
     ports:
