@@ -67,7 +67,7 @@ http://SERVER-IP:8892
 
 Replace `SERVER-IP` with the IP address of the computer running SynthIPTV.
 
-To change the port or configuration directory, copy the included example environment file:
+To change the host port or host configuration directory, copy the included example environment file:
 
 ```bash
 cp .env.example .env
@@ -88,6 +88,8 @@ Then start or recreate the container:
 ```bash
 docker compose up -d
 ```
+
+SYNTHIPTV_CONFIG changes only the host-side configuration directory. The container-side path remains /opt/synthiptv/config.
 
 Keep the config directory when updating SynthIPTV.
 
@@ -112,11 +114,11 @@ services:
     ports:
       - "8892:8892"
     volumes:
-      - /opt/synthiptv/config:/opt/synthiptv/config
+      - /path/to/synthiptv/config:/opt/synthiptv/config
       - /run/synth-protected:/run/synth-protected
 ```
 
-Change `/opt/synthiptv/config` to the permanent host directory where you want SynthIPTV configuration stored.
+Change only `/path/to/synthiptv/config` on the left side of the colon to the permanent host directory where you want SynthIPTV configuration stored. Leave `/opt/synthiptv/config` on the right side unchanged.
 
 The `/run/synth-protected` mount is used only when the optional protected runtime is installed.
 
