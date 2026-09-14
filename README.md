@@ -8,7 +8,7 @@ SynthIPTV runs in Docker and provides a web interface for setup and channel mana
 
 ## Requirements
 
-- AMD64 computer or server
+- x86-64 computer or server
 - Docker
 - Docker Compose v2
 - Internet access
