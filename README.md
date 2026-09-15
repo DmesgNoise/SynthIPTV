@@ -115,12 +115,10 @@ services:
       - "8892:8892"
     volumes:
       - /path/to/synthiptv/config:/opt/synthiptv/config
-      - /run/synth-protected:/run/synth-protected
 ```
 
 Change only `/path/to/synthiptv/config` on the left side of the colon to the permanent host directory where you want SynthIPTV configuration stored. Leave `/opt/synthiptv/config` on the right side unchanged.
 
-The `/run/synth-protected` mount is used only when the optional protected runtime is installed.
 
 Deploy the stack.
 
@@ -156,7 +154,6 @@ docker run -d \
   --restart unless-stopped \
   -p 8892:8892 \
   -v "$HOME/.config/synthiptv:/opt/synthiptv/config" \
-  -v /run/synth-protected:/run/synth-protected \
   ghcr.io/dmesgnoise/synthiptv:latest
 ```
 
@@ -168,7 +165,6 @@ http://SERVER-IP:8892
 
 Keep `~/.config/synthiptv` when replacing or updating the container.
 
-The `/run/synth-protected` mount is harmless when the optional protected runtime is not installed.
 
 ## Setup
 
@@ -244,26 +240,9 @@ Once the plugin is installed and Jellyfin has been restarted, no additional FFmp
 
 ## Protected Sources
 
-Clear and AES-128 sources do not require the protected runtime.
+Clear, AES-128, and supported protected sources are handled directly by the SynthIPTV container.
 
-Supported protected sources use the separate Synth Protected Runtime. The runtime is not included in the public repository and does not redistribute Chrome or Widevine.
-
-If you have access to the protected runtime package, set its release URL in `.env`:
-
-```text
-SYNTH_PROTECTED_RUNTIME_URL=
-```
-
-Then run:
-
-```bash
-./install-protected-runtime.sh
-```
-
-The installer configures the host runtime and its local socket. The SynthIPTV container communicates with that runtime through:
-
-```text
-/run/synth-protected
+The protected playback runtime, including its browser runtime and required dependencies, is packaged in the SynthIPTV image. No separate host-side protected-runtime installation or `/run/synth-protected` mount is required.
 ```
 
 After installation, restart SynthIPTV if needed:

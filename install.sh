@@ -27,15 +27,6 @@ main() {
   fi
 
   local runtime_url
-  runtime_url="$(sed -n 's/^[[:space:]]*SYNTH_PROTECTED_RUNTIME_URL[[:space:]]*=[[:space:]]*//p' .env | tail -n 1 | tr -d '\r' | sed 's/^"//;s/"$//')"
-
-  if [[ -n "$runtime_url" ]]; then
-    echo "[SYNTH] installing protected-source support"
-    SYNTHIPTV_PORT="$port"     SYNTH_PROTECTED_RUNTIME_URL="$runtime_url"       "$ROOT/install-protected-runtime.sh" || return 1
-  else
-    echo "[SYNTH] protected runtime URL not configured"
-    echo "[SYNTH] clear and AES sources remain available"
-  fi
 
   echo "[SYNTH] starting SynthIPTV"
   docker compose up -d || return 1
